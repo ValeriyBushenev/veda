@@ -45,6 +45,7 @@ jobs:
             ./control-start.sh
             sleep 180
             testcafe chrome qa/testcafe/testLogin.js --screenshots screens --screenshots-on-fails screens --speed 0.8
+            cat ./logs/*.log
             testcafe chrome qa/testcafe/testPerson.js --screenshots screens --screenshots-on-fails screens --speed 0.7
             testcafe chrome qa/testcafe/testLanguage.js --screenshots screens --screenshots-on-fails screens --speed 0.8
             testcafe chrome qa/testcafe/testComment.js --screenshots screens --screenshots-on-fails screens --speed 0.5
