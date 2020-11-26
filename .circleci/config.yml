@@ -44,9 +44,6 @@ jobs:
           command: | 
             ./control-start.sh
             sleep 180
-            ls
-            ls logs
-            cat logs/veda-console.log
             testcafe chrome qa/testcafe/testLogin.js --screenshots screens --screenshots-on-fails screens --speed 0.8
             testcafe chrome qa/testcafe/testPerson.js --screenshots screens --screenshots-on-fails screens --speed 0.7
             testcafe chrome qa/testcafe/testLanguage.js --screenshots screens --screenshots-on-fails screens --speed 0.8
@@ -64,7 +61,7 @@ jobs:
             testcafe chrome qa/testcafe/testControls.js --screenshots screens --screenshots-on-fails screens --speed 0.8
             testcafe chrome qa/testcafe/testDropDown.js --screenshots screens --screenshots-on-fails screens --speed 0.7
             testcafe chrome qa/testcafe/testAttributiveSearch.js --screenshots screens --screenshots-on-fails screens --speed 0.7
-
+            cat ./logs/*.log
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
