@@ -21,6 +21,7 @@ jobs:
            npm install -g testcafe
            testcafe --version
            npm install grunt
+           npm install grunt-contrib-qunit
            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
            sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb
            stty cols 80
@@ -45,8 +46,8 @@ jobs:
           command: | 
             ./control-start.sh
             sleep 180
+            grunt test --stack --verbose
             testcafe chrome qa/testcafe/testLogin.js --screenshots screens --screenshots-on-fails screens --speed 0.8
-            cat ./logs/*.log
             testcafe chrome qa/testcafe/testPerson.js --screenshots screens --screenshots-on-fails screens --speed 0.7
             testcafe chrome qa/testcafe/testLanguage.js --screenshots screens --screenshots-on-fails screens --speed 0.8
             testcafe chrome qa/testcafe/testComment.js --screenshots screens --screenshots-on-fails screens --speed 0.5
