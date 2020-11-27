@@ -2,6 +2,7 @@ use crate::common::get_individual;
 use crate::Context;
 use serde_json::json;
 
+use camunda_client::apis::client::APIClient;
 use camunda_client::apis::Error as CamundaError;
 use camunda_client::models::{ProcessInstanceWithVariablesDto, StartProcessInstanceDto, VariableValueDto};
 use std::collections::HashMap;

@@ -60,8 +60,6 @@ pub fn is_exportable(_module: &mut Module, ctx: &mut Context, prev_state_indv: &
                     continue;
                 }
 
-                debug!("script_id={}, doc_id={}", script_id, new_state_indv.get_id());
-
                 let mut scope = ContextScope::new(&mut ctx.workplace.scope, ctx.workplace.context);
                 if let Some(res) = compiled_script.run(&mut scope) {
                     if res.is_array() {
@@ -77,7 +75,8 @@ pub fn is_exportable(_module: &mut Module, ctx: &mut Context, prev_state_indv: &
                         }
                     } else if res.is_object() {
                         prepare_out_obj(&mut ov, res, &mut scope);
-                    } else if res.is_string() {
+                    }
+                    if res.is_string() {
                         if let Some(s) = res.to_string(scope.as_mut()) {
                             let target = s.to_rust_string_lossy(&mut scope);
                             if !target.is_empty() {
@@ -87,10 +86,6 @@ pub fn is_exportable(_module: &mut Module, ctx: &mut Context, prev_state_indv: &
                                 });
                             }
                         }
-                    } else if res.is_null_or_undefined() {
-                        debug!("empty result");
-                    } else {
-                        error!("unknown result type");
                     }
                 }
             }
@@ -155,7 +150,9 @@ pub(crate) fn prepare_script(wp: &mut ScriptsWorkPlace<ScriptInfoContext>, ev_in
          } catch (e) { log_trace (e); } \
       })();";
 
-        let mut scr_inf: ScriptInfo<ScriptInfoContext> = ScriptInfo::new_with_src(&ev_indv.get_id(), &str_script);
+        let topic = ev_indv.get_first_literal("bpmn:triggerByTopic").unwrap_or_default();
+
+        let mut scr_inf: ScriptInfo<ScriptInfoContext> = ScriptInfo::new_with_src(&topic, &str_script);
 
         wp.add_to_order(&scr_inf);
 
